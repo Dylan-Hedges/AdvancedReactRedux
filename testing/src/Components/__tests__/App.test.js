@@ -2,13 +2,21 @@ import React from 'react';
 import {shallow} from 'enzyme';
 import App from '../App';
 import CommentBox from '../CommentBox';
+import CommentList from '../CommentList';
 
-
+//Checks that a Comment Box exists
 it('shows a comment box', () => {
   //Renders App using the Enzyme shallow function - renders the React component but not its childeren (doesnt include vanilla JS)
   const wrapped = shallow(<App />);
   //Checks to see if the CommentBox component exists in the wrapped App component - .find(CommentBox) returns an array containing each instance of the CommentBox component that is found in App component, .length() returns the length of the array e.g 0 (none found) or 1 (1 found), .toEqual(1) looks at the array length and checks if it equals 1 (i.e. 1 CommentBox component found)
   expect(wrapped.find(CommentBox).length).toEqual(1);
+});
+
+
+//Checks that a Comment List exists
+it('shows a comment list', ()=> {
+  const wrapped = shallow(<App />);
+  expect(wrapped.find(CommentList).length).toEqual(1);
 });
 
 
