@@ -1,8 +1,8 @@
 import React from 'react';
 import {shallow} from 'enzyme';
 import App from '../App';
-import CommentBox from '../CommentBox';
-import CommentList from '../CommentList';
+import CommentBox from 'Components/CommentBox';
+import CommentList from 'Components/CommentList';
 
 //Checks that a Comment Box exists
 it('shows a comment box', () => {
