@@ -24,3 +24,15 @@ it('has a text area and a button', () => {
   //Checks to see if a button exists in the wrapped CommentBox component
   expect(wrapped.find('button').length).toEqual(1);
 });
+
+//Executes test - tests that a user can type a comment and it is reflected on screen
+it('has a text area that users can type in', () => {
+  //Tricks the component into thinking something has been typed in the comment box - uses Enzyme .simulate function which merges an object containing the string 'new comment' into the event object in the on change event handler (handleChange)
+  wrapped.find('textarea').simulate('change', {
+    target: {value: 'new comment'}
+  });
+  //Forces component to update - React might not rerender component straight away after setState() is called, this is an issue for the test as the component might not have rerendered and we check for the value straight after injecting it
+  wrapped.update();
+  //Checks that a value has been passed into the comment box - find textarea and checks the value prop for the text new comment
+  expect(wrapped.find('textarea').prop('value')).toEqual('new comment');
+});
