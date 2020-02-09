@@ -36,3 +36,17 @@ it('has a text area that users can type in', () => {
   //Checks that a value has been passed into the comment box - find textarea and checks the value prop for the string 'new comment'
   expect(wrapped.find('textarea').prop('value')).toEqual('new comment');
 });
+
+//Executes test - tests that the comment box (textarea) gets cleared out when the form is submitted
+it('textarea is cleared on form submit', () => {
+  wrapped.find('textarea').simulate('change', {
+    target: {value: 'new comment'}
+  });
+  wrapped.update();
+  //Submits the form
+  wrapped.find('form').simulate('submit');
+  //Updates component - value in textarea is submitted, rerenders component to display new value in text area (blank)
+  wrapped.update();
+  //Checks if the commment box is empty - checks textarea is an empty string, checks textarea is equal to an empty string
+  expect(wrapped.find('textarea').prop('value')).toEqual('');
+});
