@@ -25,28 +25,29 @@ it('has a text area and a button', () => {
   expect(wrapped.find('button').length).toEqual(1);
 });
 
-//Executes test - tests that a user can type a comment and it is reflected on screen
-it('has a text area that users can type in', () => {
-  //Tricks the component into thinking something has been typed in the comment box - uses Enzyme .simulate function which merges an object (containing the string 'new comment') into the event object in the commentbox on change event handler (handleChange)
-  wrapped.find('textarea').simulate('change', {
-    target: {value: 'new comment'}
+//Groups tests together - a function that groups together sets of tests that have a common set up or tear down
+describe('the text area', () => {
+  //Performs set up before each test is run - beforeEach is run only for the tests in the describe code block
+  beforeEach(() => {
+    //Tricks the component into thinking something has been typed in the comment box - uses Enzyme .simulate function which merges an object (containing the string 'new comment') into the event object in the commentbox on change event handler (handleChange)
+    wrapped.find('textarea').simulate('change', {
+      target: {value: 'new comment'}
+    });
+    //Forces component to update - React might not rerender component straight away after setState() is called, this is an issue for the test as the component might not have rerendered but we still check for the value straight after injecting it
+    wrapped.update();
   });
-  //Forces component to update - React might not rerender component straight away after setState() is called, this is an issue for the test as the component might not have rerendered but we still check for the value straight after injecting it
-  wrapped.update();
-  //Checks that a value has been passed into the comment box - find textarea and checks the value prop for the string 'new comment'
-  expect(wrapped.find('textarea').prop('value')).toEqual('new comment');
-});
-
-//Executes test - tests that the comment box (textarea) gets cleared out when the form is submitted
-it('textarea is cleared on form submit', () => {
-  wrapped.find('textarea').simulate('change', {
-    target: {value: 'new comment'}
+  //Executes test - tests that a user can type a comment and it is reflected on screen
+  it('has a text area that users can type in', () => {
+    //Checks that a value has been passed into the comment box - find textarea and checks the value prop for the string 'new comment'
+    expect(wrapped.find('textarea').prop('value')).toEqual('new comment');
   });
-  wrapped.update();
-  //Submits the form
-  wrapped.find('form').simulate('submit');
-  //Updates component - value in textarea is submitted, rerenders component to display new value in text area (blank)
-  wrapped.update();
-  //Checks if the commment box is empty - checks textarea is an empty string, checks textarea is equal to an empty string
-  expect(wrapped.find('textarea').prop('value')).toEqual('');
+  //Executes test - tests that the comment box (textarea) gets cleared out when the form is submitted
+  it('textarea is cleared on form submit', () => {
+    //Submits the form
+    wrapped.find('form').simulate('submit');
+    //Updates component - value in textarea is submitted, rerenders component to display new value in text area (blank)
+    wrapped.update();
+    //Checks if the commment box is empty - checks textarea is an empty string, checks textarea is equal to an empty string
+    expect(wrapped.find('textarea').prop('value')).toEqual('');
+  });
 });
