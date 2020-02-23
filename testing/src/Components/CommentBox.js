@@ -1,4 +1,8 @@
 import React, {Component} from 'react';
+//Connect function is used to wire up imported action creators to component
+import {connect} from 'react-redux';
+//Imports all action creators from actions/index.js
+import * as actions from 'actions';
 
 //Component that allows users to write comments - refactored to class based component so we can access component level state and watch input from a user
 class CommentBox extends Component {
@@ -13,6 +17,8 @@ class CommentBox extends Component {
   handleSubmit = event => {
     //Prevents page reloading when user clicks submit
     event.preventDefault();
+    //Calls the action creator saveComment with the comment the user typed
+    this.props.saveComment(this.state.comment);
     //Removes all on screen text when user clicks submit - resets the state back to blank string which is reflected on screen
     this.setState({ comment: ''});
   };
@@ -30,4 +36,5 @@ class CommentBox extends Component {
   }
 }
 
-export default CommentBox;
+//Wires up action creators to component - as there is no mapStateToProps we put null as the first argument
+export default connect(null, actions)(CommentBox);
