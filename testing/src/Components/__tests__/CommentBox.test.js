@@ -1,14 +1,19 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import CommentBox from 'Components/CommentBox';
+import Root from 'Root';
 
 //Declares variable as part of the global scope
 let wrapped;
 
 //Executes an arrow function before each it statement
 beforeEach(() => {
-  //Renders CommentBox using the Enzyme mount function - renders the component and all of its children to a fake DOM (uses jsdom library)
-  wrapped = mount(<CommentBox />);
+  wrapped = mount(
+  <Root>
+    //Renders CommentBox using the Enzyme mount function - renders the component and all of its children to a fake DOM (uses jsdom library)
+    <CommentBox />
+  </Root>
+  );
 });
 
 //Executes an arrow function after each it statement
