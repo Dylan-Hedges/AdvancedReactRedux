@@ -13,3 +13,11 @@ it('handles actions of type SAVE_COMMENT', () => {
   //Checks that newState contains the payload 'New Comment'
   expect(newState).toEqual(['New Comment']);
 });
+
+//Tests that reducer does not fail when receiving an unknown action type
+it('handles action with unknown type', () => {
+  //Passes in an action to the reducer with a random type
+  const newState = commentsReducer([], {type: 'LASDFFSDE'});
+  //Checks that what is returned is blank and no error occurs
+  expect(newState).toEqual([]);
+})
