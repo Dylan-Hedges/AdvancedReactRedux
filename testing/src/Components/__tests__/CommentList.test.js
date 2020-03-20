@@ -20,7 +20,13 @@ beforeEach(() => {
   );
 });
 
-//Executes a test
+//Tests that an <li> is created for each comment
 it('creates one LI per comment', () => {
-  console.log(wrapped.find('li').length);
+  expect(wrapped.find('li').length).toEqual(2);
+});
+
+//Tests that the comments contain specific text
+it('shows the text for each comment', () => {
+  expect(wrapped.render().text()).toContain('Comment 1');
+  expect(wrapped.render().text()).toContain('Comment 2');
 });
