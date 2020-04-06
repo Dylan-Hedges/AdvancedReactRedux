@@ -23,11 +23,11 @@ afterEach(() => {
 });
 
 //Executes test - find textarea & find button
-it('has a text area and a button', () => {
+it('has a text area and two button', () => {
   //Checks to see if a textarea exists in the wrapped CommentBox component
   expect(wrapped.find('textarea').length).toEqual(1);
   //Checks to see if a button exists in the wrapped CommentBox component
-  expect(wrapped.find('button').length).toEqual(1);
+  expect(wrapped.find('button').length).toEqual(2);
 });
 
 //Groups tests together - a function that groups together sets of tests that have a common set up or tear down
