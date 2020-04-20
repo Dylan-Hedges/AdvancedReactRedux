@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {SAVE_COMMENT, FETCH_COMMENTS} from 'actions/types';
+import {SAVE_COMMENT, FETCH_COMMENTS, CHANGE_AUTH} from 'actions/types';
 
 //Action creator - returns user comment
 export function saveComment(comment){
@@ -19,4 +19,11 @@ export function fetchComments(){
     type: FETCH_COMMENTS,
     payload: response
   };
+}
+
+export function changeAuth(isLoggedin){
+  return{
+    type: CHANGE_AUTH,
+    payload: isLoggedin
+  }
 }
