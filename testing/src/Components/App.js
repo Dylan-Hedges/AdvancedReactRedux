@@ -3,17 +3,18 @@ import {Route, Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import CommentBox from 'Components/CommentBox';
 import CommentList from 'Components/CommentList';
+import * as actions from 'actions';
 
 class App extends Component {
   //Displays sign in or sign out button - looks at auth state (saved as a prop to this component) to see if user is logged in and displays sign in or sign out button
   renderButton(){
     if(this.props.auth){
       return(
-        <button>Sign Out</button>
+        <button onClick={() => this.props.changeAuth(false)}>Sign Out</button>
       );
     }else{
       return(
-        <button>Sign In</button>
+        <button onClick={() => this.props.changeAuth(true)}>Sign In</button>
       );
     }
   }
@@ -44,4 +45,4 @@ function mapStateToProps(state){
 }
 
 //Exports the component and connects it to the Redux Store
-export default connect(mapStateToProps)(App);
+export default connect(mapStateToProps, actions)(App);
