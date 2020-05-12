@@ -8,6 +8,25 @@ import * as actions from 'actions';
 class CommentBox extends Component {
   state = { comment: ''};
 
+  //Checks that the user is logged in and pushes them to the root route if not
+  shouldNavigateAway(){
+    //If the user is not logged in - user login status is mapped to the component from the Redux Store
+    if(!this.props.auth){
+      //Pushes the user to the root route - uses the React-Router method history.push() to push the user
+      this.props.history.push('/');
+    }
+  }
+
+  //When the user first visits the '/Post' route execute the check logged in helper method - Executes when component first mounts (is first rendered to the screen)
+  componentDidMount(){
+    this.shouldNavigateAway();
+  }
+
+  //When the user clicks sign out while on the '/Post' route execute the check logged in helper method - Executes when the component updates
+  componentDidUpdate(){
+    this.shouldNavigateAway();
+  }
+
   //Typing event handler - updates state based on what user types
   handleChange = (event) => {
     this.setState({ comment: event.target.value});
@@ -39,5 +58,9 @@ class CommentBox extends Component {
   }
 }
 
+function mapStateToProps(state){
+  return { auth : state.auth };
+}
+
 //Wires up action creators to component - as there is no mapStateToProps we put null as the first argument
-export default connect(null, actions)(CommentBox);
+export default connect(mapStateToProps, actions)(CommentBox);
