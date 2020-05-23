@@ -9,6 +9,11 @@ const morgan = require('morgan');
 //Creates instance of express
 const app = express();
 
+//App Setup - app.use() uses the libraries provided as middleware
+//Logging framework - used for debugging, logs incoming requests
+app.use(morgan('combined'));
+//Parses incoming requests as JSON - '*/*' = parse all incoming request types
+app.use(bodyParser.json({type: '*/*'}));
 
 //Server Setup
 //Defines the port the server will run on
