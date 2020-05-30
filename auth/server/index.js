@@ -1,3 +1,5 @@
+//Access Keys
+const keys = require('./config/keys');
 //Handles back end routing, handeling requests etc.
 const express = require('express');
 //Handles incoming HTTP requests - will forward to express
@@ -8,7 +10,15 @@ const bodyParser = require('body-parser');
 const morgan = require('morgan');
 //Creates instance of express
 const app = express();
+//Contains Route Handlers
 const router = require('./router');
+//Interacts with MongoDB
+const mongoose = require('mongoose');
+
+
+//Connects to remote MongoDB (mLab)
+mongoose.connect(keys.mongoURI);
+
 
 //App Setup - app.use() uses the libraries provided as middleware
 //Logging framework - used for debugging, logs incoming requests
