@@ -7,13 +7,20 @@ exports.signup = function(req, res, next){
   const email = req.body.email;
   const password = req.body.password;
 
+  //If there is no email or password - saved from req.body
+  if(!email || !password){
+    //Send back an HTTP status code of 422 (cannot be processed) and an error message that an email address and password must be provided
+    return res.status(422).send({error: 'You must provide email and password'});
+  }
+
   //Searches through the collection of users in MongoDB to see if a user with this email alreadys exists - once the search completes it executes a callback function, this function has an error argument (if search request failed) and a result argument (if email is found save user to existingUser, will be null if no user found)
   User.findOne({email: email}, function(err, existingUser){
     //If the search request to MongoDB fails - return the error (asynchronous)
     if(err) {return next(err);}
 
-    //If the user already exists - send back an HTTP status code of 422 (cannot be processed) and an error message that the email is already in use
+    //If the user already exists
     if(existingUser){
+      //Send back an HTTP status code of 422 (cannot be processed) and an error message that the email is already in use
       return res.status(422).send({error: 'This email has already been used'});
     }
 
