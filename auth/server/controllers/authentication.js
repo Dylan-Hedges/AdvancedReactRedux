@@ -1,5 +1,17 @@
+//Imports JWT library - creates JSON Web Tokens for user authentication
+const jwt = require('jwt-simple');
 //Imports the user model from Mongoose
 const User = require('../models/user');
+//Access Keys
+const keys = require('../config/keys');
+
+//Creates JSON Web Token for a user when they sign up - JWTs allow users to make additonal requests to our app without having to sign in each time, JWTs are created using the user id + a random string, the JWT is included in the header of user requests, when the app recieves the JWT it is decrypted and allows us to identify the user id and give them access to resources
+function tokenForUser(user){
+  //Saves the time and date
+  const timestamp = new Date().getTime();
+  //Creates a JWT for the user - sub: user.id - sets the subject (who the token belongs to) as the user id; iat: timestamp - issued at time, sets the date/time for when the token was issued, the date/time is captured when the function executes; keys.secret - encrypts the user id using a random string of characters
+  return jwt.encode({ sub: user.id, iat: timestamp }, keys.secret);
+}
 
 //Exports the sign up function that will handle sign up requests (POST request to the /signup route) - req = incoming HTTP request, res = the response we send back to whoever made the request, next = used for error handling
 exports.signup = function(req, res, next){
@@ -34,7 +46,7 @@ exports.signup = function(req, res, next){
     user.save(function(err){
       //If the user fails to save to MongoDB - return the error (asynchronous)
       if(err) {return next(err);}
-      res.json(user)
+      res.json({token: tokenForUser(user)});
     });
   })
 
