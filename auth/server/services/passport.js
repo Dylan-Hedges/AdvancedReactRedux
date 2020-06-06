@@ -12,7 +12,7 @@ const ExtractJwt = require('passport-jwt').ExtractJwt;
 //Tells JwtStrategy where in the header to extract the JWT - the JWT token can be anywhere in the request (e.g header, body)
 const jwtOptions = {
   //Tells JwtStrategy to extract the JWT under the request header -> authorization
-  jwtFormRequest: ExtractJwt.formHeader('authorization'),
+  jwtFromRequest: ExtractJwt.fromHeader('authorization'),
   //Tells JwtStrategy to decrypt the JWT using the random string of characters found in keys.secret
   secretOrKey: keys.secret
 };
