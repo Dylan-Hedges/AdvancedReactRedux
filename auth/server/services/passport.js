@@ -8,6 +8,15 @@ const keys = require('../config/keys');
 const JwtStrategy =  require('passport-jwt').Strategy;
 //Tells the JwtStrategy where the JWT is located in the request header and the location for the string used to decrypt it
 const ExtractJwt = require('passport-jwt').ExtractJwt;
+//Imports the Passport.js local strategy - used to authenticate users with an email and password
+const LocalStrategy = require('passport-local');
+
+//Tells LocalStrategy to look at header -> 'email' property for the username - we specify this because we are not using usernames and instead using email addresses
+const localOptions = {usernameField 'email'};
+//Authenticates users who sign in - authenticates users who sign in using an email and password using the Passport.js Local Strategy
+const localLogin = new LocalStrategy({username}, function(email, password, done){
+
+});
 
 //Tells JwtStrategy where in the header to extract the JWT - the JWT token can be anywhere in the request (e.g header, body)
 const jwtOptions = {
