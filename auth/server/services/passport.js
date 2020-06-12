@@ -12,10 +12,25 @@ const ExtractJwt = require('passport-jwt').ExtractJwt;
 const LocalStrategy = require('passport-local');
 
 //Tells LocalStrategy to look at header -> 'email' property for the username - we specify this because we are not using usernames and instead using email addresses
-const localOptions = {usernameField 'email'};
+const localOptions = {usernameField: 'email'};
 //Authenticates users who sign in - authenticates users who sign in using an email and password using the Passport.js Local Strategy
-const localLogin = new LocalStrategy({username}, function(email, password, done){
-
+const localLogin = new LocalStrategy(localOptions, function(email, password, done){
+  //Searches that the user exists in MongoDB
+  User.findOne({email:email}, function(err, user){
+    //If the MongoDB search fails return the error message
+    if(err) {return done(err);}
+    //If the user is not found in MongoDB return false
+    if(!user){ return done(false)}
+    //Uses the comparePassword method on the user model to check the password is correct - executes the comparePassword method on the user found in MongoDB
+    user.comparePassword(password, function(err, isMatch){
+      //If there was an error return the error message
+      if(err){ return done(err);}
+      //If the passwords did not match - return false to Passport.js
+      if(!isMatch){ return done(false)}
+      //If it does match - return the found user to Passport.js
+      return done(null, user);
+    })
+  })
 });
 
 //Tells JwtStrategy where in the header to extract the JWT - the JWT token can be anywhere in the request (e.g header, body)
@@ -45,3 +60,5 @@ const jwtLogin = new JwtStrategy(jwtOptions, function(payload, done){
 
 //Tells passport.js to use the jwtLogin
 passport.use(jwtLogin);
+//Tells passport.js to use Local Login strategy
+passport.use(localLogin)

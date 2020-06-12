@@ -29,6 +29,17 @@ userSchema.pre('save', function(next){
     });
   });
 });
+
+//Adds a method to the user schema which compares the password the user entered to the password in MongoDB - candidatePassword = the password user provides when signing in
+userSchema.methods.comparePassword = function(candidatePassword, callback){
+  //Uses bcrypt to authenticate the user based on password - gets the salt used to encrypt the password in MongoDB, hashes the password the user entered (candidatePassword), checks the hashed password is the same as the hashed password in MongoDB (this.password), we dont actualy decrypt the password, if the hash is the same then the passwords match
+  bcrypt.compare(candidatePassword, this.password, function(err, isMatch){
+    //If there was an error (passwords didnt match) during the comparison, return the error
+    if(err){ return callback(err);}
+    //Otherwise (passwords matched) call the callback with isMatch (true)
+    callback(null, isMatch);
+  });
+}
 //Model - uses the userSchma to create new users (a new document/record) in the user collection in MongoDB
 const ModelClass = mongoose.model('user', userSchema);
 
