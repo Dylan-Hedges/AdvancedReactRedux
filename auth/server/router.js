@@ -7,6 +7,8 @@ const passport = require('passport');
 
 //Authenticates incoming requests using the Passport.authenticate jwt strategy - acts as middleware, executed before the request reaches the route, authenticates the user if there is a valid JWT in header -> 'authorization' otherwise returns Unauthorized; {session:false} - dont make it a cookie based session as we are using JWTs
 const requireAuth = passport.authenticate('jwt', {session:false});
+//Authenticates incoming requests using the Passport.authenticate jwt strategy - acts as middleware, executed before the request reaches the route, authenticates the user if there is a valid JWT in header -> 'authorization' otherwise returns Unauthorized; {session:false} - dont make it a cookie based session as we are using JWTs
+const requireSignin = passport.authenticate('local',{session: false});
 
 //Contains Route Handlers
 module.exports = function(app){
@@ -14,6 +16,8 @@ module.exports = function(app){
   app.get('/', requireAuth, function(req, res){
     res.send({hi:'there'})
   })
-  //RH for Sign UP (POST requests) - When a POST HTTP request is sent to the '/signup' route, execute the Authentication.signup function (imported above)
+  //RH for Sign In (POST requests) - When a POST HTTP request is sent to the '/signin' route, first execute requireSignin to authenticate the user (imported above, acts as middleware), if successful then move onto the next step and execute Authentication.signin so the user can get a JWT for subsequent requests, if unsuccessful kick the user out of the flow
+  app.post('/signin', requireSignin, Authentication.signin)
+  //RH for Sign Up (POST requests) - When a POST HTTP request is sent to the '/signup' route, execute the Authentication.signup function (imported above)
   app.post('/signup', Authentication.signup)
 };

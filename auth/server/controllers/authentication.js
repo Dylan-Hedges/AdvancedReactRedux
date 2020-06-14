@@ -12,10 +12,15 @@ function tokenForUser(user){
   //Creates a JWT for the user - sub: user.id - sets the subject (who the token belongs to) as the user id; iat: timestamp - issued at time, sets the date/time for when the token was issued, the date/time is captured when the function executes; keys.secret - encrypts the user id using a random string of characters
   return jwt.encode({ sub: user.id, iat: timestamp }, keys.secret);
 }
+//Exports the sign in function that will give users a JWT - authenticates users for subsequent requests
+exports.signin = function(req, res, next){
+  //Gives the user a JWT - creates a token using the tokenForUser helper function, once the user is authenticated Passport.js saves the current user model (user account info) under req.user when the done() function is called, we can access this current user model and use it to create a token
+  res.send({token:tokenForUser(req.user)});
+}
 
 //Exports the sign up function that will handle sign up requests (POST request to the /signup route) - req = incoming HTTP request, res = the response we send back to whoever made the request, next = used for error handling
 exports.signup = function(req, res, next){
-  //Saves the email and password from the body of the incoming request
+  //Saves the email and password from the body of the incoming request - req.body, Passport.js saves this info under req.body when the done() function is called
   const email = req.body.email;
   const password = req.body.password;
 
