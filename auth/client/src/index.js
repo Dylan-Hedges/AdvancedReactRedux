@@ -1,12 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './components/App';
-import {BrowserRouter} from 'react-router-dom';
+import {BrowserRouter, Route} from 'react-router-dom';
 
-//Renders the App.js file to the DOM - <BrowserRouter> provides react-router <Link> functionality
+import App from './components/App';
+import Welcome from './components/Welcome';
+
+//Renders the App.js file to the DOM - <BrowserRouter> provides react-router <Link> functionality; <Route /> allows a component to be displayed inside another component on a specific route
 ReactDOM.render(
   <BrowserRouter>
-      <App />
+      <App>
+        <Route path="/" exact component={Welcome} />
+      </App>
   </BrowserRouter>,
   document.querySelector('#root')
 );
