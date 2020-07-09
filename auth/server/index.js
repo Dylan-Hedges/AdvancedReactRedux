@@ -14,7 +14,8 @@ const app = express();
 const router = require('./router');
 //Interacts with MongoDB
 const mongoose = require('mongoose');
-
+//Used to configure where we want to allow CORS requests from
+const cors = require('cors');
 
 //Connects to remote MongoDB (mLab)
 mongoose.connect(keys.mongoURI);
@@ -23,6 +24,8 @@ mongoose.connect(keys.mongoURI);
 //App Setup - app.use() uses the libraries provided as middleware
 //Logging framework - used for debugging, logs incoming requests
 app.use(morgan('combined'));
+//Allows our app to recieve CORS requests from any domain, subdomain or port - can also configure it to allow CORS requests from specific domains, subdomains or ports
+app.use(cors());
 //Parses incoming requests as JSON - '*/*' = parse all incoming request types
 app.use(bodyParser.json({type: '*/*'}));
 router(app);
