@@ -35,16 +35,23 @@ class Signup extends Component{
             autoComplete="none"
           />
         </fieldset>
+        <div>
+          {this.props.errorMessage}
+        </div>
         <button>Sign Up</button>
       </form>
     );
   }
 }
-
+//Maps the Redux Store (state) to the component (props)
+function mapStateToProps(state){
+  //Saves the error message in the Redux Store (under state.auth.errorMessage) to the props of this component (under the key errorMessage)
+  return{errorMessage: state.auth.errorMessage};
+}
 //Exports the component and applies higher order functions - compose allows us to wire up multiple higher order functions to this component with clean syntax
 export default compose(
-  //Wires up the component to the Action creators - null - currently no pieces of state in the Redux Store we want to wire up to the component
-  connect(null, actions),
+  //Wires up the component to the Action creators - executes the mapStateToProps function which maps the Redux Store to the component
+  connect(mapStateToProps, actions),
   //Wires up the component to Redux Form - {form: 'signup'} names this Redux Form signup
   reduxForm({form: 'signup'})
 )(Signup);
