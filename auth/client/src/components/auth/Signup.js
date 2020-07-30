@@ -9,7 +9,10 @@ class Signup extends Component{
   //Recieves/processes the data the user entered in the form (email and password)
   onSubmit = (formProps) => {
     //Executes the signup Action Creator and passes in the email and password the user typed
-    this.props.signup(formProps);
+    this.props.signup(formProps, () => {
+      //Redirects user to the '/feature' route after they sign up - uses the history prop provided by Redux Router
+      this.props.history.push('/feature');
+    });
   };
   render(){
     //Saves the handle submit fuction - this is a Redux Form function which added to the .props of the component when wiring up Redux Form to the component
