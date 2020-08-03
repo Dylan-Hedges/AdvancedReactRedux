@@ -8,6 +8,7 @@ import reduxThunk from 'redux-thunk';
 import App from './components/App';
 import Welcome from './components/Welcome';
 import Signup from './components/auth/Signup';
+import Feature from './components/Feature'
 import reducers from './reducers';
 
 //Creates the Redux Store - passes in reducers, inital state (blank object) and applyMiddleware(reduxThunk) which wires up Redux Thunk to our app (allows functions to be executed in action creators)
@@ -24,6 +25,7 @@ ReactDOM.render(
         <App>
           <Route path="/" exact component={Welcome} />
           <Route path="/signup" exact component={Signup} />
+          <Route path="/feature" exact component={Feature} />
         </App>
     </BrowserRouter>
   </Provider>,
