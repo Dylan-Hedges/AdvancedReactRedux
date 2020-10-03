@@ -11,10 +11,10 @@ import Signup from './components/auth/Signup';
 import Feature from './components/Feature'
 import reducers from './reducers';
 
-//Creates the Redux Store - passes in reducers, inital state (blank object) and applyMiddleware(reduxThunk) which wires up Redux Thunk to our app (allows functions to be executed in action creators)
+//Creates the Redux Store - passes in reducers, inital state (blank object) and applyMiddleware(reduxThunk) which wires up Redux Thunk to our app (allows functions to be executed in action creators), {auth: {authenticated: localStorage.getItem('token')}} takes the JWT in localStorage and saves it to the initial state in ReduxStore under auth
 const store = createStore(
   reducers,
-  {},
+  {auth: {authenticated: localStorage.getItem('token')}},
   applyMiddleware(reduxThunk)
 );
 
