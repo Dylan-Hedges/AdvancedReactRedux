@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import requireAuth from './requireAuth';
 
 //Component that user gets redirect to after signing in
 class Feature extends Component{
@@ -9,4 +10,4 @@ class Feature extends Component{
   }
 }
 
-export default Feature;
+export default requireAuth(Feature);
