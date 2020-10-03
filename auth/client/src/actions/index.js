@@ -19,3 +19,14 @@ export const signup = (formProps, callback) => async dispatch => {
     dispatch({type: AUTH_ERROR, payload: 'This email is already in use'});
   }
 };
+
+//Signout Action Creator - signs out the user
+export const signout = () =>{
+  //Clears the JWT in the localStorage saved under the 'token' key
+  localStorage.removeItem('token');
+  //Clears the JWT in the Redux Store - dispatches an action with a blank string which overwrites the JWT in the Redux Store (clears it)
+  return{
+    type: AUTH_USER,
+    payload: ''
+  };
+};

@@ -10,6 +10,7 @@ import Welcome from './components/Welcome';
 import Signup from './components/auth/Signup';
 import Feature from './components/Feature'
 import reducers from './reducers';
+import Signout from './components/auth/Signout';
 
 //Creates the Redux Store - passes in reducers, inital state (blank object) and applyMiddleware(reduxThunk) which wires up Redux Thunk to our app (allows functions to be executed in action creators), {auth: {authenticated: localStorage.getItem('token')}} takes the JWT in localStorage and saves it to the initial state in ReduxStore under auth
 const store = createStore(
@@ -26,6 +27,7 @@ ReactDOM.render(
           <Route path="/" exact component={Welcome} />
           <Route path="/signup" exact component={Signup} />
           <Route path="/feature" exact component={Feature} />
+          <Route path="/signout" exact component={Signout} />
         </App>
     </BrowserRouter>
   </Provider>,
